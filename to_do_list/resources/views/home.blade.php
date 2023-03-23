@@ -11,11 +11,6 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     rel="stylesheet"
     />
-    <!-- Google Fonts -->
-    <link
-    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-    rel="stylesheet"
-    />
     <!-- MDB -->
     <link
     href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css"
@@ -47,21 +42,39 @@
                 @if (count($toDoLists))
                 <ul class="list-group list-group-flush mt-3">
                     @foreach ($toDoLists as $toDoList)
-                        <!-- Delete Item -->
-                        <li class="list-group-item">
+                    
+                    
+                    <li class="list-group-item">
+                            <!-- Delete Item -->
                             <form action="{{ route('destroy', $toDoList->id) }}" method="POST">
                                 {{ $toDoList->description }}
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-link btn-sm float-end"><i class="fas fa-trash"></i></button>
                             </form>
-                        </li>
+
+                            <!-- Check Item -->
+                            <form action="{{ route('updateStatus', $toDoList->id) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $toDoList->id }}">
+                                @if ($toDoList->status)
+                                    <input name="status" onchange="this.form.submit()" class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" checked disabled>
+                                @else
+                                    <input name="status" onchange="this.form.submit()" class="form-check-input" type="checkbox" value="0" id="flexCheckDefault">
+                                @endif
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Concluído
+                                </label>
+                            </form>
+                    </li>
                     @endforeach
                 </ul>
+                <!-- Caso não tenha tarefas -->
                 @else
                     <p class="text-center mt-3">Sem afazeres</p>
                 @endif
                 </div>
+                <!-- Quantidade de tarefas -->
                 @if (count($toDoLists))
                     <div class="card-footer">
                         Você possui {{ count($toDoLists) }} tarefa(s).

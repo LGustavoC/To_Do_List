@@ -7,26 +7,14 @@ use Illuminate\Http\Request;
 
 class ToDoListController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //Listar
     public function index()
     {
         $toDoLists = ToDoList::all();
         return view('home', compact('toDoLists'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    //Salvar dados
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -37,36 +25,19 @@ class ToDoListController extends Controller
         return back();
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ToDoList $toDoList)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ToDoList $toDoList)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ToDoList $toDoList)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    //Deletar dados
     public function destroy(ToDoList $toDoList)
     {
         $toDoList->delete();
         return back();
     }
+
+    //Atualizar status
+    public function updateStatus(Request $request)
+    {
+        $id = $request->input('id');
+        ToDoList::where('id', $request->id)->update(['status' => 1]);
+        return back();
+    }
+
 }
