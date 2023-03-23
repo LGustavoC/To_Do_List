@@ -12,8 +12,8 @@ class ToDoListController extends Controller
      */
     public function index()
     {
-        $toDoList = ToDoList::all();
-        return view('home', compact('toDoList'));
+        $toDoLists = ToDoList::all();
+        return view('home', compact('toDoLists'));
     }
 
     /**
@@ -30,7 +30,7 @@ class ToDoListController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'content' => 'required'
+            'description' => 'required'
         ]);
 
         ToDoList::create($data);
