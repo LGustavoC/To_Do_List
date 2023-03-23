@@ -12,7 +12,8 @@ class ToDoListController extends Controller
      */
     public function index()
     {
-        //
+        $toDoList = ToDoList::all();
+        return view('home', compact('toDoList'));
     }
 
     /**
@@ -28,7 +29,12 @@ class ToDoListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'content' => 'required'
+        ]);
+
+        ToDoList::create($data);
+        return back();
     }
 
     /**
@@ -60,6 +66,7 @@ class ToDoListController extends Controller
      */
     public function destroy(ToDoList $toDoList)
     {
-        //
+        $toDoList->delete();
+        return back();
     }
 }
